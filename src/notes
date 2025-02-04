@@ -1,0 +1,14 @@
+Database original
+Estado RO: 3168
+Cidade Porto-velho: 389
+
+
+Entrada (matrix) no modelo GEE:
+Estado RO: 3661 
+Cidade Porto-velho: 501
+
+
+Saída do modelo predição GEE:
+Estado RO: 2567
+Cidade Porto-velho: 287
+

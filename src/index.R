@@ -2,9 +2,16 @@
 # Tabela soil-organic-carbon-stock-0-30-cm-grams-per-square-meter-RO.csv
 # Tabela soc_stock_comparison.csv
 
+# Load the libraries
+library(data.table)
+
+
+
 # Load the data
-data_predicao <- fread("data/soc_stock_comparison_RO.csv")
+data_predicao <- fread("data/soc_stock_comparison_RO-matrix-RO.csv")
 nrow(data_predicao)
 
 data_observacao <- fread("data/soil-organic-carbon-stock-0-30-cm-grams-per-square-meter-RO.csv")
 nrow(data_observacao)
+
+
