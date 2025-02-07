@@ -10,7 +10,7 @@ if (!require(tmap)) install.packages("tmap")
 
 
 # CARREGAR DADOS 
-oob_results <- fread("./data/oob-results-rondonia.csv")
+oob_results <- fread("./data/PORTO_VELHO/soc_stock_PORTO-VELHO_v1.csv")
 nrow(oob_results)
 
 # verificar se SF 
@@ -66,7 +66,8 @@ oob_results$latitude <- as.numeric(oob_results$latitude)
 oob_results_sf <- st_as_sf(oob_results, coords = c("longitude", "latitude"), crs = 4326)
 
 # Shapefile nova uniao
-rondonia <- read_municipality(code_muni = 11, year = 2020)
+#rondonia <- read_municipality(code_muni = 1100205, year = 2020)
+rondonia <- read_municipality(code_muni = 1100072, year = 2020)
 
 if (st_crs(rondonia)$epsg != 4326) {
   rondonia <- st_transform(rondonia, crs = 4326)
@@ -77,7 +78,7 @@ dev.off()
 
 
 # Plotar mapa de Porto Velho
-plot(st_geometry(rondonia), col = "lightgray", main = "Amostras de Erros de Previsão em Corumbiara", axes = TRUE)
+plot(st_geometry(rondonia), col = "lightgray", main = "Amostras de Erros de Previsão em Nova União", axes = TRUE)
 plot(st_geometry(oob_results_sf), pch = 20, col = "red", add = TRUE)
 
 oob_results_sf <- oob_results_sf[!is.na(oob_results_sf$error), ]
@@ -99,7 +100,7 @@ tm_shape(rondonia) +
     legend.show = TRUE
   ) +
   tm_layout(
-    title = "Mapa de Erros Rondônia", 
+    title = "Mapa de Erros Corumbiara", 
     title.position = c("center", "top"), # Centraliza o título no topo
     legend.position = c("right", "center"), # Alinha a legenda à direita e centraliza
     legend.outside = TRUE, # Move a legenda para fora do mapa
@@ -107,7 +108,7 @@ tm_shape(rondonia) +
   )
 
 # SEMIVARIGRAMA AJUSTADO
-cutoff <- 1000
+cutoff <- 45
 semivariogram <- gstat::variogram(
   error ~ 1,
   locations = oob_results_sf,
@@ -127,11 +128,11 @@ plot(
 
 
 
-nugget <- 6 # The nugget effect accounts for measurement error and short-range variability
-psill <- 8 - nugget # Partial sill is the maximum semivariance
-range <- 200 # The range is the distance at which the semivariogram reaches the sill
-#model <- "Gau" # Gaussian model é mais suave a curva (PARA REGIOES AREAS COM PONTOS)
-model <- "Exp" # Assume que que tem uma rapida sumida no começo do processo (CURTA DISTANCIA) 
+nugget <- 7 # The nugget effect accounts for measurement error and short-range variability
+psill <- 6  - nugget # Partial sill is the maximum semivariance
+range <- 10 # The range is the distance at which the semivariogram reaches the sill
+model <- "Gau" # Gaussian model é mais suave a curva (PARA REGIOES AREAS COM PONTOS)
+#model <- "Exp" # Assume que que tem uma rapida sumida no começo do processo (CURTA DISTANCIA) 
 vgm_model <- gstat::vgm(psill = psill, model = model, range = range, nugget = nugget)
 fit_vgm_model <- gstat::fit.variogram(semivariogram, model = vgm_model)
 print(fit_vgm_model)

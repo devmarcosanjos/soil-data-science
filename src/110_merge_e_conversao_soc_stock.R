@@ -2,7 +2,7 @@
 
 
 # Carregar os dados
-soc_stock_comparison_predito <- read.csv("data/soc_stock_comparison_RO-matrix-RO.csv", stringsAsFactors = FALSE)
+soc_stock_comparison_predito <- read.csv("data/PORTO_VELHO/dados_padronizados.csv", stringsAsFactors = FALSE)
 soil_organic_carbon_observado <- read.csv("data/soil-organic-carbon-stock-0-30-cm-grams-per-square-meter-RO.csv", stringsAsFactors = FALSE)
 database <- read.csv("data/soil-organic-carbon-stock-0-30-cm-grams-per-square-meter.csv", stringsAsFactors = FALSE)
 
@@ -62,7 +62,7 @@ soc_stock_comparison_predito <- soc_stock_comparison_predito %>%
 head(soc_stock_comparison_predito)
 
 # Salvar o resultado em um novo arquivo
-write.csv(soc_stock_comparison_predito, "soc_stock_comparison_updated.csv", row.names = FALSE)
+write.csv(soc_stock_comparison_predito, "data/PORTO_VELHO/soc_stock_comparison_updated.csv", row.names = FALSE)
 
 # quantidade de amostras
 nrow(soc_stock_comparison_predito)
@@ -88,4 +88,4 @@ soc_stock_comparison_predito <- soc_stock_comparison_predito %>%
 head(soc_stock_comparison_predito)
 
 # Salvar o resultado em um novo arquivo
-write.csv(soc_stock_comparison_predito, "data/soc_stock_estado_ro.csv", row.names = FALSE)
+write.csv(soc_stock_comparison_predito, "data/PORTO_VELHO/soc_stock_PORTO-VELHO.csv", row.names = FALSE)
