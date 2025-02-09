@@ -10,7 +10,7 @@ if (!require(tmap)) install.packages("tmap")
 
 
 # CARREGAR DADOS 
-oob_results <- fread("./data/PORTO_VELHO/soc_stock_PORTO-VELHO_v1.csv")
+oob_results <- fread("./data/ESTADO_RO/200_analise_oob_result.csv")
 nrow(oob_results)
 
 # verificar se SF 
@@ -27,7 +27,33 @@ error_stats <- oob_results[, .(
 print(error_stats)
 
 
-# Plot the dispersion of predicted vs observed values
+# Media do carbono observado e predito 
+mean_soc_observado <- oob_results[, .(
+  mean_soc_observado = mean(soc_stock_t_ha_observado, na.rm = TRUE),
+  median_soc_observado = median(soc_stock_t_ha_observado, na.rm = TRUE),
+  min_soc_observado = min(soc_stock_t_ha_observado, na.rm = TRUE),
+  max_soc_observado = max(soc_stock_t_ha_observado, na.rm = TRUE),
+  sd_soc_observado = sd(soc_stock_t_ha_observado, na.rm = TRUE)
+)]
+
+mean_soc_predito <- oob_results[, .(
+  mean_soc_predito = mean(soc_stock_t_ha_predito, na.rm = TRUE),
+  median_soc_predito = median(soc_stock_t_ha_predito, na.rm = TRUE),
+  min_soc_predito = min(soc_stock_t_ha_predito, na.rm = TRUE),
+  max_soc_predito = max(soc_stock_t_ha_predito, na.rm = TRUE),
+  sd_soc_predito = sd(soc_stock_t_ha_predito, na.rm = TRUE)
+)]
+
+
+print(mean_soc_observado)
+print(mean_soc_predito)
+
+
+
+
+
+
+  # Plot the dispersion of predicted vs observed values
 png("res/fig/ro/observed_vs_predicted-ro.png", width = 800, height = 600)
 plot(
   y = oob_results$soc_stock_t_ha_observado,

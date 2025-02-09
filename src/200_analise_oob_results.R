@@ -8,7 +8,7 @@ if (!require(RColorBrewer)) install.packages("RColorBrewer")
 
 
 # CARREGAR DADOS 
-oob_results <- fread("./data/PORTO_VELHO/soc_stock_PORTO-VELHO.csv")
+oob_results <- fread("./data/ALTO_ALEGRE_DOS_PARECIS/110_merge_e_conversao_soc_stock")
 nrow(oob_results)
 
 ob_results <- unique(oob_results, by = c("latitude", "longitude"))
@@ -30,12 +30,14 @@ oob_results_sf <- st_join(oob_results_sf, cities)
 
 # FILTRAR OS DADOS SOMENTE DADOS DO ESTADO DE RONDÔNIA || PORTO VELHO
 #oob_results_RO <- oob_results_sf[oob_results_sf$name_state == "Rondônia",]
-#oob_results_RO <- oob_results_sf[oob_results_sf$name_state == "Porto Velho",]
-oob_results_RO <- oob_results_sf[oob_results_sf$name_muni == "Porto Velho",]
+#oob_results_RO <- oob_results_sf[oob_results_sf$name_muni == "Porto Velho",]
+#oob_results_RO <- oob_results_sf[oob_results_sf$name_muni == "Jaru",]
+#oob_results_RO <- oob_results_sf[oob_results_sf$name_muni == "Cujubim",]
+oob_results_RO <- oob_results_sf[oob_results_sf$name_muni == "Alto Alegre Dos Parecis",]
 nrow(oob_results_RO)
 
 # SALVAR DADOS EM CSV 
-fwrite(oob_results_RO, "./data/PORTO_VELHO/soc_stock_PORTO-VELHO_v1.csv")
+fwrite(oob_results_RO, "./data/ALTO_ALEGRE_DOS_PARECIS/200_analise_oob_result.csv")
 
 # motrar dados
 head(oob_results_RO)
